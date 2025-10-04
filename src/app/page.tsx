@@ -1,8 +1,10 @@
 import { Feather, Github } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { CodeBlock } from "@/components/code-block";
+import { getImage } from "@/app/lib/placeholder-images";
 
 const navItems = [
   { name: "Getting Started", href: "#getting-started" },
@@ -11,35 +13,6 @@ const navItems = [
   { name: "API Docs", href: "#api-docs" },
   { name: "Contributing", href: "#contributing" },
 ];
-
-const helloWorldCode = `from swiftapi.app import SwiftAPI
-from swiftapi.exceptions import HTTPException
-from dataclasses import dataclass
-
-app = SwiftAPI()
-
-@dataclass
-class Item:
-    name: str
-    price: float
-    is_offer: bool | None = None
-
-@app.get("/")
-async def read_root():
-    return {"message": "Hello World"}
-
-@app.post("/items")
-async def create_item(item: Item):
-    return item
-
-@app.get("/users/{user_id}")
-async def read_user(user_id: int, q: str | None = None):
-    return {"user_id": user_id, "q": q}
-    
-@app.get("/error")
-async def trigger_error():
-    raise HTTPException(status_code=418, detail="I'm a teapot")
-`;
 
 const quickstartCode = `from swiftapi.app import SwiftAPI
 
@@ -117,6 +90,7 @@ function Section({ id, title, children }: { id: string, title: string, children:
 }
 
 function HeroSection() {
+  const heroImage = getImage("hero-code");
   return (
     <section id="home" className="py-20 text-center">
       <div className="space-y-6">
@@ -134,6 +108,18 @@ function HeroSection() {
         </div>
       </div>
       <div className="mt-12 text-left">
+          {heroImage && (
+            <div className="my-8 rounded-xl border shadow-lg overflow-hidden">
+                <Image
+                    src={heroImage.imageUrl}
+                    alt={heroImage.description}
+                    width={1200}
+                    height={800}
+                    className="w-full"
+                    data-ai-hint={heroImage.imageHint}
+                />
+            </div>
+          )}
           <h3 className="text-center text-lg font-semibold mb-2">Try the demo locally</h3>
           <CodeBlock code="pip install swiftapi\npython examples/hello_world.py" />
       </div>
@@ -160,41 +146,83 @@ function GettingStartedSection() {
 }
 
 function RoutingSection() {
+    const routingImage = getImage("routing-diagram");
     return (
         <Section id="routing" title="Async HTTP Routing">
-            <p className="text-center">SwiftAPI uses simple decorators to define API routes. It fully supports <code className="font-code rounded bg-secondary px-1 py-0.5">async def</code> for high-performance, non-blocking I/O.</p>
-            <h3 className="text-xl font-semibold pt-8">Path and Query Parameters</h3>
-            <p>Define path parameters with curly braces and add type-hinted function arguments for query parameters. SwiftAPI handles parsing and type conversion for you.</p>
-            <CodeBlock code={routingCode} />
-            <p>A request to <code className="font-code rounded bg-secondary px-1 py-0.5">/users/123?q=searchterm</code> would result in the JSON response: <code className="font-code rounded bg-secondary px-1 py-0.5">{`{"user_id": 123, "q": "searchterm"}`}</code>.</p>
+             <div className="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <p>SwiftAPI uses simple decorators to define API routes. It fully supports <code className="font-code rounded bg-secondary px-1 py-0.5">async def</code> for high-performance, non-blocking I/O.</p>
+                    <h3 className="text-xl font-semibold pt-8">Path and Query Parameters</h3>
+                    <p>Define path parameters with curly braces and add type-hinted function arguments for query parameters. SwiftAPI handles parsing and type conversion for you.</p>
+                    <CodeBlock code={routingCode} />
+                    <p>A request to <code className="font-code rounded bg-secondary px-1 py-0.5">/users/123?q=searchterm</code> would result in the JSON response: <code className="font-code rounded bg-secondary px-1 py-0.5">{`{"user_id": 123, "q": "searchterm"}`}</code>.</p>
+                </div>
+                 {routingImage && (
+                    <div className="rounded-lg overflow-hidden border shadow-lg">
+                        <Image
+                            src={routingImage.imageUrl}
+                            alt={routingImage.description}
+                            width={600}
+                            height={400}
+                            className="w-full h-auto"
+                            data-ai-hint={routingImage.imageHint}
+                        />
+                    </div>
+                )}
+            </div>
         </Section>
     );
 }
 
 function ValidationSection() {
+    const validationImage = getImage("validation-check");
     return (
         <Section id="validation" title="Lightweight Validation">
-            <p className="text-center">Ensure data integrity with a simple, Pydantic-like validation system using Python's built-in dataclasses.</p>
-            <h3 className="text-xl font-semibold pt-8">Request Body Validation</h3>
-            <p>Define your expected data structure using a <code className="font-code rounded bg-secondary px-1 py-0.5">dataclass</code>. SwiftAPI will automatically validate incoming request bodies, parse the data, and inject it into your path function.</p>
-            <CodeBlock code={validationCode} />
-            <p>If a request is sent with an invalid body (e.g., missing 'name' or incorrect type for 'price'), SwiftAPI will automatically return a <code className="font-code rounded bg-secondary px-1 py-0.5">422 Unprocessable Entity</code> error with a descriptive JSON body.</p>
+            <div className="grid md:grid-cols-2 gap-12 items-center">
+                 {validationImage && (
+                    <div className="rounded-lg overflow-hidden border shadow-lg">
+                        <Image
+                            src={validationImage.imageUrl}
+                            alt={validationImage.description}
+                            width={600}
+                            height={400}
+                            className="w-full h-auto"
+                            data-ai-hint={validationImage.imageHint}
+                        />
+                    </div>
+                )}
+                <div>
+                    <p>Ensure data integrity with a simple, Pydantic-like validation system using Python's built-in dataclasses.</p>
+                    <h3 className="text-xl font-semibold pt-8">Request Body Validation</h3>
+                    <p>Define your expected data structure using a <code className="font-code rounded bg-secondary px-1 py-0.5">dataclass</code>. SwiftAPI will automatically validate incoming request bodies, parse the data, and inject it into your path function.</p>
+                    <CodeBlock code={validationCode} />
+                    <p>If a request is sent with an invalid body (e.g., missing 'name' or incorrect type for 'price'), SwiftAPI will automatically return a <code className="font-code rounded bg-secondary px-1 py-0.5">422 Unprocessable Entity</code> error with a descriptive JSON body.</p>
+                </div>
+            </div>
         </Section>
     );
 }
 
 function ApiDocsSection() {
+    const swaggerImage = getImage("swagger-ui");
+    const redocImage = getImage("redoc-ui");
     return (
         <Section id="api-docs" title="Automatic API Docs">
             <p className="text-center">One of SwiftAPI's most powerful features is its ability to automatically generate interactive API documentation from your code.</p>
             <div className="grid md:grid-cols-2 gap-8 pt-8">
-                <div className="rounded-lg border bg-card p-6 text-card-foreground shadow-sm">
-                    <h3 className="text-xl font-semibold">Swagger UI</h3>
-                    <p className="mt-2 text-muted-foreground">Navigate to <a href="#api-docs" className="text-primary-foreground underline">/docs</a> to explore your API through a rich, interactive Swagger UI. Test endpoints, see schemas, and understand your API's capabilities instantly.</p>
+                <div className="rounded-lg border bg-card text-card-foreground shadow-sm flex flex-col">
+                    {swaggerImage && <Image src={swaggerImage.imageUrl} alt={swaggerImage.description} width={500} height={350} className="rounded-t-lg" data-ai-hint={swaggerImage.imageHint}/>}
+                    <div className="p-6 flex-1 flex flex-col">
+                        <h3 className="text-xl font-semibold">Swagger UI</h3>
+                        <p className="mt-2 text-muted-foreground flex-1">Navigate to <a href="#api-docs" className="text-primary-foreground underline">/docs</a> to explore your API through a rich, interactive Swagger UI. Test endpoints, see schemas, and understand your API's capabilities instantly.</p>
+                    </div>
                 </div>
-                <div className="rounded-lg border bg-card p-6 text-card-foreground shadow-sm">
-                    <h3 className="text-xl font-semibold">ReDoc</h3>
-                    <p className="mt-2 text-muted-foreground">For a clean, single-column documentation view, visit <a href="#api-docs" className="text-primary-foreground underline">/redoc</a>. ReDoc provides a beautifully rendered, readable alternative for your API documentation.</p>
+                <div className="rounded-lg border bg-card text-card-foreground shadow-sm flex flex-col">
+                    {redocImage && <Image src={redocImage.imageUrl} alt={redocImage.description} width={500} height={350} className="rounded-t-lg" data-ai-hint={redocImage.imageHint} />}
+                    <div className="p-6 flex-1 flex flex-col">
+                        <h3 className="text-xl font-semibold">ReDoc</h3>
+                        <p className="mt-2 text-muted-foreground flex-1">For a clean, single-column documentation view, visit <a href="#api-docs" className="text-primary-foreground underline">/redoc</a>. ReDoc provides a beautifully rendered, readable alternative for your API documentation.</p>
+                    </div>
                 </div>
             </div>
             <p className="text-center pt-8">This is all generated automatically from your type hints and route definitions, requiring zero extra configuration.</p>
