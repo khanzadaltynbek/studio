@@ -3,32 +3,32 @@
     {
       "id": "hero-code",
       "description": "A screenshot of Python code for a web application.",
-      "imageUrl": "https://picsum.photos/seed/swiftapi-hero/1200/800",
-      "imageHint": "code editor"
+      "imageUrl": "https://picsum.photos/seed/swiftapi-hero-new/1200/800",
+      "imageHint": "code editor dark"
     },
     {
       "id": "routing-diagram",
       "description": "A diagram illustrating API request routing.",
-      "imageUrl": "https://picsum.photos/seed/swiftapi-routing/600/400",
-      "imageHint": "flowchart diagram"
+      "imageUrl": "https://picsum.photos/seed/swiftapi-routing-new/600/400",
+      "imageHint": "glowing network nodes"
     },
     {
       "id": "validation-check",
       "description": "An icon representing successful data validation.",
-      "imageUrl": "https://picsum.photos/seed/swiftapi-validation/600/400",
-      "imageHint": "checkmark shield"
+      "imageUrl": "https://picsum.photos/seed/swiftapi-validation-new/600/400",
+      "imageHint": "digital security shield"
     },
     {
       "id": "swagger-ui",
       "description": "A preview of the Swagger UI documentation page.",
-      "imageUrl": "https://picsum.photos/seed/swiftapi-swagger/500/350",
-      "imageHint": "web interface"
+      "imageUrl": "https://picsum.photos/seed/swiftapi-swagger-new/500/350",
+      "imageHint": "api documentation screen"
     },
     {
       "id": "redoc-ui",
       "description": "A preview of the ReDoc documentation page.",
-      "imageUrl": "https://picsum.photos/seed/swiftapi-redoc/500/350",
-      "imageHint": "documentation website"
+      "imageUrl": "https://picsum.photos/seed/swiftapi-redoc-new/500/350",
+      "imageHint": "modern web ui"
     }
   ]
 }

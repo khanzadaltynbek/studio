@@ -1,17 +1,19 @@
-import { Feather, Github } from "lucide-react";
+import { Feather, Github, Home, Route, ShieldCheck, FileCode, Handshake, Menu } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { CodeBlock } from "@/components/code-block";
 import { getImage } from "@/app/lib/placeholder-images";
+import { Sidebar, SidebarContent, SidebarInset, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarHeader, SidebarTrigger } from "@/components/ui/sidebar";
 
 const navItems = [
-  { name: "Getting Started", href: "#getting-started" },
-  { name: "Routing", href: "#routing" },
-  { name: "Validation", href: "#validation" },
-  { name: "API Docs", href: "#api-docs" },
-  { name: "Contributing", href: "#contributing" },
+  { name: "Home", href: "#home", icon: Home },
+  { name: "Getting Started", href: "#getting-started", icon: Feather },
+  { name: "Routing", href: "#routing", icon: Route },
+  { name: "Validation", href: "#validation", icon: ShieldCheck },
+  { name: "API Docs", href: "#api-docs", icon: FileCode },
+  { name: "Contributing", href: "#contributing", icon: Handshake },
 ];
 
 const quickstartCode = `from swiftapi.app import SwiftAPI
@@ -47,26 +49,47 @@ async def create_item(item: Item):
     # against the 'Item' dataclass.
     return item`;
 
+function AppSidebar() {
+    return (
+        <Sidebar>
+            <SidebarContent>
+                <SidebarHeader>
+                    <Link href="/" className="flex items-center gap-2">
+                        <Feather className="w-6 h-6 text-primary" />
+                        <span className="font-bold text-lg">SwiftAPI</span>
+                    </Link>
+                </SidebarHeader>
+                <SidebarMenu>
+                    {navItems.map((item) => (
+                        <SidebarMenuItem key={item.name}>
+                            <a href={item.href}>
+                                <SidebarMenuButton tooltip={item.name}>
+                                    <item.icon />
+                                    <span>{item.name}</span>
+                                </SidebarMenuButton>
+                            </a>
+                        </SidebarMenuItem>
+                    ))}
+                </SidebarMenu>
+            </SidebarContent>
+        </Sidebar>
+    );
+}
+
 function Header() {
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container mx-auto flex h-14 max-w-4xl items-center justify-between px-4">
-        <Link href="/" className="flex items-center space-x-2">
-          <Feather className="h-6 w-6 text-primary-foreground" />
-          <span className="font-bold font-headline">SwiftAPI</span>
-        </Link>
-        <nav className="hidden items-center space-x-6 text-sm font-medium md:flex">
-          {navItems.map((item) => (
-            <a
-              key={item.name}
-              href={item.href}
-              className="transition-colors hover:text-primary-foreground/80"
-            >
-              {item.name}
-            </a>
-          ))}
-        </nav>
-        <div className="flex items-center">
+    <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="container mx-auto flex h-14 max-w-full items-center justify-between px-4 md:px-6">
+        <div className="flex items-center gap-2 md:hidden">
+            <SidebarTrigger>
+                <Menu />
+            </SidebarTrigger>
+            <Link href="/" className="flex items-center gap-2 font-bold text-lg">
+                <Feather className="w-6 h-6 text-primary" />
+                <span>SwiftAPI</span>
+            </Link>
+        </div>
+        <div className="flex flex-1 items-center justify-end gap-2">
             <Button variant="ghost" size="icon" asChild>
                 <a href="https://github.com/firebase/genkit-pro-swiftapi" target="_blank" rel="noopener noreferrer" aria-label="GitHub Repository">
                     <Github className="h-5 w-5" />
@@ -80,8 +103,8 @@ function Header() {
 
 function Section({ id, title, children }: { id: string, title: string, children: React.ReactNode }) {
     return (
-        <section id={id} className="py-16 space-y-6">
-            <h2 className="text-3xl font-bold tracking-tight font-headline text-center">{title}</h2>
+        <section id={id} className="py-20 md:py-24 space-y-8">
+            <h2 className="text-3xl font-bold tracking-tight text-center sm:text-4xl">{title}</h2>
             <div className="text-muted-foreground text-lg leading-relaxed">
                 {children}
             </div>
@@ -94,7 +117,7 @@ function HeroSection() {
   return (
     <section id="home" className="py-20 text-center">
       <div className="space-y-6">
-        <h1 className="text-5xl font-bold tracking-tighter font-headline sm:text-6xl md:text-7xl">
+        <h1 className="text-5xl font-bold tracking-tighter sm:text-6xl md:text-7xl">
           Build Fast, Modern APIs with Python
         </h1>
         <p className="mx-auto max-w-[700px] text-lg text-muted-foreground md:text-xl">
@@ -109,7 +132,7 @@ function HeroSection() {
       </div>
       <div className="mt-12 text-left">
           {heroImage && (
-            <div className="my-8 rounded-xl border shadow-lg overflow-hidden">
+            <div className="my-8 rounded-xl border-2 border-primary/20 shadow-2xl shadow-primary/20 overflow-hidden">
                 <Image
                     src={heroImage.imageUrl}
                     alt={heroImage.description}
@@ -140,7 +163,7 @@ function GettingStartedSection() {
             <h3 className="text-xl font-semibold pt-4">3. Run the server</h3>
             <p>Use an ASGI server like Uvicorn to run your application.</p>
             <CodeBlock code={runServerCode} />
-            <p>Now, open your browser and navigate to <a href="http://127.0.0.1:8000" target="_blank" rel="noopener noreferrer" className="text-primary-foreground underline">http://127.0.0.1:8000</a>. You should see the JSON response: <code className="font-code rounded bg-secondary px-1 py-0.5">{`{"message": "Hello World"}`}</code>.</p>
+            <p>Now, open your browser and navigate to <a href="http://127.0.0.1:8000" target="_blank" rel="noopener noreferrer" className="text-primary-foreground font-semibold underline">http://127.0.0.1:8000</a>. You should see the JSON response: <code className="font-code rounded bg-secondary px-1 py-0.5">{`{"message": "Hello World"}`}</code>.</p>
         </Section>
     );
 }
@@ -214,14 +237,14 @@ function ApiDocsSection() {
                     {swaggerImage && <Image src={swaggerImage.imageUrl} alt={swaggerImage.description} width={500} height={350} className="rounded-t-lg" data-ai-hint={swaggerImage.imageHint}/>}
                     <div className="p-6 flex-1 flex flex-col">
                         <h3 className="text-xl font-semibold">Swagger UI</h3>
-                        <p className="mt-2 text-muted-foreground flex-1">Navigate to <a href="#api-docs" className="text-primary-foreground underline">/docs</a> to explore your API through a rich, interactive Swagger UI. Test endpoints, see schemas, and understand your API's capabilities instantly.</p>
+                        <p className="mt-2 text-muted-foreground flex-1">Navigate to <a href="#api-docs" className="text-primary font-semibold underline">/docs</a> to explore your API through a rich, interactive Swagger UI. Test endpoints, see schemas, and understand your API's capabilities instantly.</p>
                     </div>
                 </div>
                 <div className="rounded-lg border bg-card text-card-foreground shadow-sm flex flex-col">
                     {redocImage && <Image src={redocImage.imageUrl} alt={redocImage.description} width={500} height={350} className="rounded-t-lg" data-ai-hint={redocImage.imageHint} />}
                     <div className="p-6 flex-1 flex flex-col">
                         <h3 className="text-xl font-semibold">ReDoc</h3>
-                        <p className="mt-2 text-muted-foreground flex-1">For a clean, single-column documentation view, visit <a href="#api-docs" className="text-primary-foreground underline">/redoc</a>. ReDoc provides a beautifully rendered, readable alternative for your API documentation.</p>
+                        <p className="mt-2 text-muted-foreground flex-1">For a clean, single-column documentation view, visit <a href="#api-docs" className="text-primary font-semibold underline">/redoc</a>. ReDoc provides a beautifully rendered, readable alternative for your API documentation.</p>
                     </div>
                 </div>
             </div>
@@ -249,7 +272,7 @@ function ContributingSection() {
 function Footer() {
   return (
     <footer className="border-t">
-      <div className="container mx-auto flex h-20 max-w-4xl items-center justify-between px-4 text-sm text-muted-foreground">
+      <div className="container mx-auto flex h-20 max-w-7xl items-center justify-between px-4 text-sm text-muted-foreground">
         <p>&copy; {new Date().getFullYear()} SwiftAPI. All rights reserved.</p>
         <p>
           Built by{" "}
@@ -257,7 +280,7 @@ function Footer() {
             href="https://firebase.google.com/docs/studio"
             target="_blank"
             rel="noopener noreferrer"
-            className="font-medium underline underline-offset-4"
+            className="font-medium underline underline-offset-4 text-primary/80"
           >
             Firebase Studio
           </a>
@@ -270,19 +293,24 @@ function Footer() {
 
 export default function SwiftAPIPage() {
   return (
-    <div className="flex min-h-screen w-full flex-col bg-background text-foreground">
-      <Header />
-      <main className="flex-1">
-        <div className="container mx-auto max-w-4xl px-4 divide-y divide-border">
-          <HeroSection />
-          <GettingStartedSection />
-          <RoutingSection />
-          <ValidationSection />
-          <ApiDocsSection />
-          <ContributingSection />
+    <>
+      <AppSidebar />
+      <SidebarInset>
+        <div className="flex min-h-screen w-full flex-col bg-background text-foreground">
+          <Header />
+          <main className="flex-1">
+            <div className="container mx-auto max-w-5xl px-4 divide-y divide-border">
+              <HeroSection />
+              <GettingStartedSection />
+              <RoutingSection />
+              <ValidationSection />
+              <ApiDocsSection />
+              <ContributingSection />
+            </div>
+          </main>
+          <Footer />
         </div>
-      </main>
-      <Footer />
-    </div>
+      </SidebarInset>
+    </>
   );
 }
