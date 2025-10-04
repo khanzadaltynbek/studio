@@ -20,7 +20,6 @@ asynchronous programming (`async/await`), routing, data validation, and automati
 
 ## ⚙️ Installation
 
-```bash
 # Clone the repository
 git clone https://github.com/khanzadaltynbek/swiftapi.git
 cd swiftapi
@@ -32,6 +31,8 @@ source venv/bin/activate   # Windows: venv\Scripts\activate
 # Install dependencies
 pip install -r requirements.txt
 pip install -e .
+
+---
 
 🚀 Quick Start
 
@@ -58,10 +59,10 @@ async def create_item(item: Item):
 
 Run the development server:
 uvicorn main:app --reload
-
+---
 Server will be available at:
 👉 http://127.0.0.1:8000
-
+---
 📚 API Documentation
 
 Swagger UI: http://127.0.0.1:8000/docs
@@ -69,19 +70,19 @@ Swagger UI: http://127.0.0.1:8000/docs
 ReDoc: http://127.0.0.1:8000/redoc
 
 OpenAPI JSON: http://127.0.0.1:8000/openapi.json
-
+---
 ▶️ Example
 
 The repository includes a ready-to-run example:
 
 python -m examples.hello_world
-
+---
 🤝 Contributing
 
 We welcome contributions!
 Please read CONTRIBUTING.md
  before submitting a Pull Request.
-
+---
 📄 License
 
 SwiftAPI is licensed under the MIT License.
