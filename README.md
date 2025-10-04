@@ -1,41 +1,39 @@
-# SwiftAPI
+SwiftAPI
 
-SwiftAPI — это образовательный, легковесный и асинхронный веб-фреймворк для Python, вдохновленный FastAPI.
+SwiftAPI is an educational, lightweight, and asynchronous Python web framework inspired by FastAPI.
 
-Проект создан с целью изучения основных механик современных Python-фреймворков: асинхронность (async/await), маршрутизация, валидация данных и автоматическая генерация документации API.
+The project was created to explore the core mechanics of modern Python frameworks: async/await, routing, data validation, and automatic API documentation generation.
 
----
+Key Features
 
-## Ключевые особенности
+Fully asynchronous, built on ASGI for high performance
 
-- Полностью асинхронный: построен на ASGI, что обеспечивает высокую производительность.  
-- Маршрутизация на основе декораторов: простой и интуитивно понятный синтаксис для определения эндпоинтов.  
-- Валидация данных: встроенная легковесная валидация на основе стандартных датаклассов Python и аннотаций типов.  
-- Автоматическая документация API: Swagger UI (/docs), ReDoc (/redoc), OpenAPI схема (/openapi.json).  
-- Простое внедрение зависимостей через параметры функций.  
-- Открытый исходный код: распространяется под лицензией MIT.  
+Decorator-based routing with simple and intuitive syntax
 
----
+Data validation using dataclass and type annotations
 
-## Установка
+Automatic API docs: Swagger UI (/docs), ReDoc (/redoc), OpenAPI (/openapi.json)
 
-```bash
-# Клонирование репозитория
-git clone https://github.com/khanzadaltynbek/swiftapi.git
+Dependency injection via function parameters
+
+Open source under the MIT license
+
+Installation
+git clone https://github.com/YOUR_USERNAME/swiftapi.git
 cd swiftapi
 
-# (Рекомендуется) создание виртуального окружения
+# (recommended) create a virtual environment
 python -m venv venv
 source venv/bin/activate   # Windows: venv\Scripts\activate
 
-# Установка зависимостей
+# install dependencies
 pip install -r requirements.txt
 pip install -e .
-Быстрый старт
-Создайте файл main.py со следующим содержимым:
 
-python
-Копировать код
+Quick Start
+
+Create a main.py file:
+
 from swiftapi.app import SwiftAPI
 from dataclasses import dataclass
 
@@ -55,29 +53,32 @@ async def read_root():
 @app.post("/items/")
 async def create_item(item: Item):
     return {"item_name": item.name, "price": item.price}
-Запуск сервера разработки:
 
-bash
-Копировать код
+
+Run the development server:
+
 uvicorn main:app --reload
-После запуска сервер будет доступен по адресу:
+
+
+The server will be available at:
 http://127.0.0.1:8000
 
-Документация API
+API Documentation
+
 Swagger UI: http://127.0.0.1:8000/docs
 
 ReDoc: http://127.0.0.1:8000/redoc
 
 OpenAPI JSON: http://127.0.0.1:8000/openapi.json
 
-Запуск примера
-В репозитории есть готовый пример. Запустите его командой:
-
-bash
-Копировать код
+Example Run
 python -m examples.hello_world
-Как внести вклад
-Мы рады любому вкладу. Пожалуйста, ознакомьтесь с CONTRIBUTING.md перед отправкой Pull Request.
 
-Лицензия
-Проект распространяется под лицензией MIT. Подробности можно найти в файле LICENSE.
+Contributing
+
+See CONTRIBUTING.md
+ for contribution guidelines.
+
+License
+
+This project is licensed under the MIT License. See LICENSE.
